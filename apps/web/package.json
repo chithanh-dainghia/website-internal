@@ -21,6 +21,7 @@
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6",
-    "jest-config": "workspace:*"
+    "jest-config": "workspace:*",
+    "@griffel/react": "1.5.14"
   }
 }
