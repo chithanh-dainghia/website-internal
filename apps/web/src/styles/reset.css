@@ -199,7 +199,7 @@ hr {
 /* 
  */
 
-.apple {
+/* .apple {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-family-apple);
@@ -211,4 +211,13 @@ hr {
 
 .segoe {
   font-family: var(--font-family-segoe);
+} */
+
+/*  */
+
+
+.body-custom {
+  background-color: var(--web-wash);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
 }
