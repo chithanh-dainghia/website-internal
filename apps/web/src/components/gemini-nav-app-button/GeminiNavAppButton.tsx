@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import {
   Icons,
+  IconProps,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -12,9 +13,10 @@ import {
 
 type GeminiNavAppButtonProps = {
   children?: ReactNode
-  className?: string
   tooltipContent: string
-}
+  active: boolean
+} & Pick<IconProps, 'type'> &
+  JSX.IntrinsicElements['div']
 
 function convert_css_var_to_variable(css_variables: string[]) {
   const arrStr = {}
@@ -35,15 +37,12 @@ function convert_css_var_to_variable(css_variables: string[]) {
 
 export default function GeminiNavAppButton({
   children,
-  href,
   className,
   tooltipContent,
+  type,
+  active,
   ...props
-}: GeminiNavAppButtonProps & LinkProps) {
-  const path = usePathname()
-
-  const active = path === href
-
+}: GeminiNavAppButtonProps) {
   // convert_css_var_to_variable([
   //   '--toast-addon-padding-horizontal',
   //   '--toast-addon-padding-vertical',
@@ -53,14 +52,13 @@ export default function GeminiNavAppButton({
     <TooltipProvider delayDuration={300}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link
+          <div
             {...props}
             className={clsx(
               'group h-[40px] w-full flex justify-center items-center rounded-md relative',
               active && 'bg-[var(--primary-deemphasized-button-background)]',
               className,
             )}
-            href={href}
           >
             <Icons
               width={24}
@@ -70,10 +68,10 @@ export default function GeminiNavAppButton({
                 active && '[&>path]:fill-[var(--primary-button-background)]',
               )}
               active={active}
-              type="Home"
+              type={type}
             />
             <div className="group-hover:opacity-100 opacity-0 right-0 top-0 left-0 bottom-0 absolute transition-opacity ease-fdsAnimationFadeOut duration-fdsDurationExtraExtraShortOut pointer-events-none bg-[var(--hover-overlay)] rounded-[inherit]" />
-          </Link>
+          </div>
         </TooltipTrigger>
 
         <TooltipContent asChild side="right">

@@ -5,8 +5,35 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { GeminiNavAppButton } from '../gemini-nav-app-button'
+import { usePathname, useRouter } from 'next/navigation'
+
+const GeminiHomeButon = () => {
+  const pathName = usePathname()
+
+  return (
+    <GeminiNavAppButton
+      active={pathName === '/'}
+      type="Home"
+      tooltipContent="Trang chủ"
+    />
+  )
+}
+
+const GeminiNotifyButon = () => {
+  const pathName = usePathname()
+
+  return (
+    <GeminiNavAppButton
+      active={pathName === '/'}
+      type="Home"
+      tooltipContent="Trang chủ"
+    />
+  )
+}
 
 export default function GeminiLayoutNavigationAppList() {
+  const router = useRouter()
+
   return (
     <div className="w-[56px] min-w-[56px] h-full flex flex-col  border-x border-solid border-divider bg-wigNavBackground">
       <div
@@ -19,13 +46,15 @@ export default function GeminiLayoutNavigationAppList() {
         <div className="h-8" />
 
         <div className="flex justify-center items-center gap-1.5 flex-col">
-          <GeminiNavAppButton href="/" tooltipContent="Trang chủ" />
-          <GeminiNavAppButton href="/1" tooltipContent="Thông báo" />
-          <GeminiNavAppButton href="/2" tooltipContent="Trang chủ" />
-          <GeminiNavAppButton href="/3" tooltipContent="Thư viện tài liệu" />
-          <GeminiNavAppButton href="/4" tooltipContent="Thư viện câu hỏi" />
+          <GeminiHomeButon />
+          <GeminiNotifyButon />
         </div>
       </div>
     </div>
   )
 }
+
+/**
+
+WorkGalahadAppTabSet
+ */

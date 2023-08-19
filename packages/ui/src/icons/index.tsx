@@ -1,29 +1,21 @@
-import { SVGProps } from 'react'
+import React from 'react'
+
+import type { IconProps } from './types'
+
 import Home from './home'
+import Notify from './notify'
 
-type IconsProps = {
-  type: 'Home'
-  active: boolean
-}
-
-export default function Icons({
-  active,
-  type,
-  ...props
-}: IconsProps & SVGProps<SVGSVGElement>) {
+export function Icons({ active, type, ...props }: IconProps) {
   switch (type) {
     case 'Home':
       return <Home {...props} active={active} />
 
-    case 'Home':
-      return <Home {...props} active={active} />
+    case 'Notify':
+      return <Notify {...props} active={active} />
 
-    case 'Home':
-      return <Home {...props} active={active} />
-
-    case 'Home':
-      return <Home {...props} active={active} />
     default:
       return <div />
   }
 }
+
+export { IconProps }
