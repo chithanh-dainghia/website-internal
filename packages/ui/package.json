@@ -13,22 +13,13 @@
     "@types/react-dom": "^18.2.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
-    "react": "^17.0.2",
+    "react": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6",
-    "tailwind-config": "workspace:*"
-  },
-  "peerDependencies": {
-    "tailwindcss": "3.3.2",
-    "tailwindcss-animate": "^1.0.6"
+    "ua-parser-js": "1.0.35"
   },
   "dependencies": {
-    "tailwindcss": "3.3.2",
-    "tailwindcss-animate": "^1.0.6",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "1.14.0",
-    "@radix-ui/react-tooltip": "1.0.6",
-    "@radix-ui/react-tabs": "1.0.4"
+    "@fluentui/react-components": "9.29.3",
+    "@griffel/react": "1.5.14"
   }
 }

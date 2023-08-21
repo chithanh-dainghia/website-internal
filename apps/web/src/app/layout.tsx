@@ -1,8 +1,7 @@
 import '../styles/index.css'
 
 import React from 'react'
-
-import { GeminiLayoutPage } from '@/components'
+import { FluentAppProvider } from '@/components/fluent-layout'
 
 export default function RootLayout({
   children,
@@ -12,7 +11,7 @@ export default function RootLayout({
   return (
     <html id="portal" lang="en" dir="ltr">
       <body className="body-custom system-fonts--body segoe">
-        <GeminiLayoutPage>{children}</GeminiLayoutPage>
+        <FluentAppProvider>{children}</FluentAppProvider>
       </body>
     </html>
   )
