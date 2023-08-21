@@ -1,3 +1,3 @@
-export { default as CometTextTypography } from "./CometTextTypography";
+export { default as CometTextTypography } from './CometTextTypography'
 
-export type { TypeKeys } from "./CometTextTypography";
+export type { TyporaphyType as TypeKeys } from './CometTextTypography'

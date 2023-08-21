@@ -19,7 +19,6 @@
     "ua-parser-js": "1.0.35"
   },
   "dependencies": {
-    "@fluentui/react-components": "9.29.3",
     "@griffel/react": "1.5.14"
   }
 }

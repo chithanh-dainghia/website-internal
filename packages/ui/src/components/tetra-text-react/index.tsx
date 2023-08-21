@@ -1,1 +1,1 @@
-export { default as TetraTextReact } from "./TetraText.react";
+export { default as TetraText } from './TetraText.react'
