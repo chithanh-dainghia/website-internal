@@ -32,10 +32,7 @@ const BUTTON_TYPE: Record<string, string> = {
   white: 'primaryButton',
 }
 
-function getButtonColor(
-  color: string,
-  type: keyof typeof BUTTON_TYPE | boolean,
-) {
+function getTypoColor(color: string, type: keyof typeof BUTTON_TYPE | boolean) {
   if (type) {
     // Check if the type is present in BUTTON_TYPE, otherwise use the provided color
     return (type = BUTTON_TYPE[color]) !== null ? type : color
@@ -72,6 +69,7 @@ type TetraTextProps = {
   numberOfLines?: number
   preserveNewLines?: boolean
   suppressHydrationWarning?: boolean
+  truncationTooltip?: boolean
   type: TypeKeys
 }
 
@@ -104,33 +102,33 @@ const TetraText = forwardRef<HTMLSpanElement, TetraTextProps>(
 
     const [densityMode, _] = useCometDensityModeContext()
     const typo = CometTextTypography[type]
-    const defaultColor =
-      typo.defaultColor === undefined ? 'primary' : typo.defaultColor
 
-    const fontFamily = typo.fontFamily
-    const fontSize = typo.fontSize
-    const fontWeight =
-      typo.fontWeight === undefined ? 'normal' : typo.fontWeight
+    const {
+      fontFamily,
+      fontSize,
+      defaultColor = 'primary',
+      fontWeight = 'normal',
+      offsets = [0, 0],
+    } = typo
 
-    const offsets = typo.offsets === undefined ? [0, 0] : typo.offsets
     const offsetsValue = offsets.length === 3 ? offsets[2] : 0
 
-    const buttonColor = getButtonColor(
-      (color = color) != null ? color : defaultColor,
+    const typoColor = getTypoColor(
+      color !== undefined ? color : defaultColor,
       type === 'button1' || type === 'button2',
     )
 
     const CometTextContextValue = useMemo(
       function () {
-        return { color: buttonColor, type: type }
+        return { color: typoColor, type: type }
       },
-      [buttonColor, type],
+      [typoColor, type],
     )
 
     const baseTextContextValue = useBaseTextContext()
 
     const nested =
-      (baseTextContextValue == null
+      (baseTextContextValue === undefined
         ? undefined
         : baseTextContextValue.nested) === true
 
@@ -148,18 +146,16 @@ const TetraText = forwardRef<HTMLSpanElement, TetraTextProps>(
               !nested &&
                 // @ts-ignore
                 classes8[
-                  numberOfLines !== null
+                  numberOfLines !== undefined
                     ? offsets[1] + offsetsValue
                     : offsets[1]
                 ],
               // @ts-ignore
-              densityMode && classes5[fontSize],
-              // @ts-ignore
-              !densityMode && classes4[fontSize],
+              densityMode ? classes5[fontSize] : classes4[fontSize],
               // @ts-ignore
               classes6[fontWeight],
               // @ts-ignore
-              classes3[buttonColor],
+              classes3[typoColor],
               align !== 'auto' && classes2[align],
               preserveNewLines && classes1.preserveNewLines,
             )}
@@ -167,6 +163,7 @@ const TetraText = forwardRef<HTMLSpanElement, TetraTextProps>(
             id={id}
             ref={ref}
             suppressHydrationWarning={suppressHydrationWarning}
+            data-testid={undefined}
           >
             {numberOfLines !== null ? (
               <CometLineClamp

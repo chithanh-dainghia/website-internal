@@ -22,7 +22,7 @@ type TyporaphyStyle = {
   fontSize: number
   fontWeight: string
   lineHeight: number
-  offsets: number[]
+  offsets?: number[]
 }
 
 export const TYPORAPHY_STYLES = {

@@ -1,28 +1,29 @@
-import React, { CSSProperties, ReactNode } from "react";
-import { mergeClasses } from "@griffel/react";
+import React, { CSSProperties, ReactNode, useCallback } from 'react'
+import { mergeClasses } from '@griffel/react'
 
-import { useCometTextContext } from "@ui/context";
-import { CometTextTypography, TypeKeys } from "@ui/styles";
+import { useCometTextContext } from '@ui/context'
+import { CometTextTypography, TypeKeys } from '@ui/styles'
 
-import CSSUserAgentSupports from "@ui/utils/common/CSSUserAgentSupports";
+import CSSUserAgentSupports from '@ui/utils/common/CSSUserAgentSupports'
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles'
 
 type CometLineClampProps = {
-  children?: ReactNode;
-  id?: string;
-  lines?: number;
-  testid?: string;
-  useAutomaticTextDirection?: boolean;
-  className?: string;
-};
+  children?: ReactNode
+  id?: string
+  lines?: number
+  testid?: string
+  useAutomaticTextDirection?: boolean
+  className?: string
+  truncationTooltip?: boolean
+}
 
-const notSupportWebkitLineClamp = CSSUserAgentSupports.webkitLineClamp();
+const notSupportWebkitLineClamp = CSSUserAgentSupports.webkitLineClamp()
 
 function calculateLineHeight(type?: TypeKeys) {
   return type != null && type in CometTextTypography
     ? CometTextTypography[type].lineHeight
-    : 16;
+    : 16
 }
 
 export default function CometLineClamp({
@@ -32,31 +33,38 @@ export default function CometLineClamp({
   useAutomaticTextDirection = false,
   testid,
   className,
+  truncationTooltip,
 }: CometLineClampProps) {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const cometTextContextValue = useCometTextContext();
+  const cometTextContextValue = useCometTextContext()
 
-  let internalStyle: CSSProperties | undefined;
-  let childrenClone = children;
+  let internalStyle: CSSProperties | undefined
+  let childrenClone = children
+
+  //   t = useCallback(function(a:any) {
+  //     if (a == null || truncationTooltip == null)
+  //         return;
+  //     n.preload()
+  // }, [truncationTooltip]);
 
   if (lines > 1) {
     if (notSupportWebkitLineClamp) {
       internalStyle = {
-        WebkitBoxOrient: "vertical",
+        WebkitBoxOrient: 'vertical',
         WebkitLineClamp: lines,
-        display: "-webkit-box",
-      };
+        display: '-webkit-box',
+      }
     } else {
       const lineHeight = calculateLineHeight(
-        cometTextContextValue == null ? undefined : cometTextContextValue.type
-      );
-      internalStyle = { maxHeight: lineHeight * lines + 0.1 };
+        cometTextContextValue == null ? undefined : cometTextContextValue.type,
+      )
+      internalStyle = { maxHeight: lineHeight * lines + 0.1 }
 
       const calculateSize: CSSProperties = {
-        maxHeight: "calc((100% - " + lineHeight * lines + "px) * 999)",
+        maxHeight: 'calc((100% - ' + lineHeight * lines + 'px) * 999)',
         top: lineHeight * (lines - 1),
-      };
+      }
 
       childrenClone = (
         <React.Fragment>
@@ -69,7 +77,7 @@ export default function CometLineClamp({
             &#8230;
           </span>
         </React.Fragment>
-      );
+      )
     }
   }
 
@@ -78,16 +86,16 @@ export default function CometLineClamp({
       className={mergeClasses(
         classes.root,
         lines === 1 && classes.oneLine,
-        className
+        className,
       )}
       data-testid={undefined}
-      dir={useAutomaticTextDirection ? "auto" : undefined}
+      dir={useAutomaticTextDirection ? 'auto' : undefined}
       id={id}
       style={internalStyle}
     >
       {childrenClone}
     </span>
-  );
+  )
 
   // CometTextContextValue = React.jsx(
   //   "span",
@@ -109,4 +117,4 @@ export default function CometLineClamp({
   // );
 }
 
-CometLineClamp.displayName = "CometLineClamp.react";
+CometLineClamp.displayName = 'CometLineClamp.react'
