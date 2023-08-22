@@ -5,18 +5,18 @@ import { unstable_createEventHandle } from 'react-dom'
 import gkx from '@ui/etc/gkx'
 import useUnsafeRef_DEPRECATED from '@ui/hooks/useUnsafeRef_DEPRECATED'
 
-type Props2 = {
+type EventOption = {
   passive?: boolean
 }
 
-function ReactUseEventReact(event: string, prop2?: Props2) {
+function ReactUseEventReact(domEventName: string, option?: EventOption) {
   const ref = useUnsafeRef_DEPRECATED(null)
   const current = ref.current
 
-  gkx.k('1703328') && prop2 && (prop2.passive = undefined)
+  gkx.k('1703328') && option && (option.passive = undefined)
 
   if (ref.current === null) {
-    var unstableEventHandle = unstable_createEventHandle(event, prop2)
+    var unstableEventHandle = unstable_createEventHandle(domEventName, option)
     var map = new Map()
 
     const curr = {

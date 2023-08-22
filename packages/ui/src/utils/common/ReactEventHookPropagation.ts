@@ -1,10 +1,14 @@
-export function hasEventHookPropagationStopped(e: any, event: string) {
-  e = e._stopEventHookPropagation
-  return e !== undefined && e[event]
+export function hasEventHookPropagationStopped(event: any, eventName: string) {
+  const _stopEventHookPropagation = event._stopEventHookPropagation
+  return (
+    _stopEventHookPropagation !== undefined &&
+    _stopEventHookPropagation[eventName]
+  )
 }
 
-export function stopEventHookPropagation(a: any, event: string) {
-  var c = a._stopEventHookPropagation
-  c || (c = a._stopEventHookPropagation = {})
-  c[event] = true
+export function stopEventHookPropagation(event: any, eventName: string) {
+  let _stopEventHookPropagation = event._stopEventHookPropagation
+  _stopEventHookPropagation ||
+    (_stopEventHookPropagation = event._stopEventHookPropagation = {})
+  _stopEventHookPropagation[eventName] = true
 }
