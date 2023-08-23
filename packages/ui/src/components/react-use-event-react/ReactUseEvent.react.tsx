@@ -10,7 +10,7 @@ type EventOption = {
 }
 
 function ReactUseEventReact(domEventName: string, option?: EventOption) {
-  const ref = useUnsafeRef_DEPRECATED(null)
+  const ref = useUnsafeRef_DEPRECATED<any>(null)
   const current = ref.current
 
   gkx.k('1703328') && option && (option.passive = undefined)

@@ -322,7 +322,7 @@ function useInteractionHandlers() {
 }
 
 function useDOMEventListener(domEventName: any, eventOption: any) {
-  const unsafeRef = useUnsafeRef_DEPRECATED(null)
+  const unsafeRef = useUnsafeRef_DEPRECATED<any>(null)
   let unsafeRefCurrent = unsafeRef.current
   gkx.k('1703328') && eventOption && (eventOption.passive = void 0)
   if (unsafeRefCurrent === null) {

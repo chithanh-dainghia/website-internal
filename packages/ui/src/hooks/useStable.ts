@@ -1,16 +1,18 @@
-import { useRef } from "react";
+import { useRef } from 'react'
 
-export default function useStable(fn: any) {
-  const ref = useRef<{ value: any } | null>(null);
+type FunctionType<T> = () => T
+
+export default function useStable<T>(fn: FunctionType<T>): T {
+  const ref = useRef<{ value: T } | null>(null)
 
   if (ref.current === null) {
-    const value = fn();
+    const value = fn()
     ref.current = {
       value,
-    };
+    }
 
-    return value;
+    return value
   } else {
-    return ref.current.value;
+    return ref.current.value
   }
 }

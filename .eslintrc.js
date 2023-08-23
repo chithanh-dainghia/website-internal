@@ -6,6 +6,7 @@ module.exports = {
       presets: [require.resolve('next/babel')],
     },
   },
+  extends: ['next/babel', 'next/core-web-vitals'],
   settings: {
     next: {
       rootDir: ['apps/*/', 'packages/*/'],
