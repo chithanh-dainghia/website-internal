@@ -1,6 +1,9 @@
 import { createContext } from 'react'
 
-type ActiveFocusRegionUtilsContextProps = {}
+type ActiveFocusRegionUtilsContextProps = {
+  getActiveFocusRegion: (...param: any) => any
+  setActiveFocusRegion: (...param: any) => any
+}
 
 const ActiveFocusRegionUtilsContext = createContext<
   ActiveFocusRegionUtilsContextProps | undefined
