@@ -16,7 +16,8 @@
     "react": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6",
-    "ua-parser-js": "1.0.35"
+    "ua-parser-js": "1.0.35",
+    "resize-observer-polyfill": "1.5.1"
   },
   "dependencies": {
     "@griffel/react": "1.5.14"
