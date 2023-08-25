@@ -19,6 +19,8 @@ import LayoutAnimationBoundaryContext from '@ui/context/LayoutAnimationBoundaryC
 import HiddenSubtreeContext from '@ui/context/HiddenSubtreeContext'
 import getComputedStyle from '@ui/utils/common/getComputedStyle'
 import isElementFixedOrSticky from '@ui/utils/common/isElementFixedOrSticky'
+import { calculateBaseContextualLayerPosition } from '@ui/utils/common/calculateBaseContextualLayerPosition'
+import { LayoutAnimationEventType } from '@ui/etc/LayoutAnimationEvents'
 
 type BaseContextualLayerReactProps = {
   align?: string
@@ -300,16 +302,16 @@ const BaseContextualLayerReact = forwardRef<
       ],
     )
 
-    V = useCallback(
+    const V = useCallback(
       function () {
         var documentElement = document.documentElement,
           currBCLAR = baseContextualLayerAnchorRootContextValue.current,
-          viewportMargin = getAdjustedViewportMargins(),
+          screenRect = getAdjustedViewportMargins(),
           contextValue = getContextValue()
         if (
           documentElement == null ||
           currBCLAR == null ||
-          viewportMargin == null ||
+          screenRect == null ||
           contextValue == null
         ) {
           return
@@ -324,7 +326,7 @@ const BaseContextualLayerReact = forwardRef<
           contextValue.nodeType === 1 &&
           isElementFixedOrSticky(contextValue)
 
-        const rectValue = baseScrollableAreaContextValue!
+        const contextRect = baseScrollableAreaContextValue!
           .map(function (el: any) {
             return el.getDOMNode()
           })
@@ -338,16 +340,16 @@ const BaseContextualLayerReact = forwardRef<
               : null
           }, getBoundingClientRectValues(contextValue))
         if (
-          rectValue == null ||
-          (rectValue.left === 0 && rectValue.right === 0)
+          contextRect == null ||
+          (contextRect.left === 0 && contextRect.right === 0)
         ) {
-          J({
+          dispatch({
             type: 'position_indeterminate',
           })
-          C && C()
+          onIndeterminatePosition && onIndeterminatePosition()
           return
         }
-        documentElement = isFixOrSticky
+        const offsetRect = isFixOrSticky
           ? {
               bottom: documentElement.clientHeight,
               left: 0,
@@ -355,38 +357,56 @@ const BaseContextualLayerReact = forwardRef<
               top: 0,
             }
           : getBoundingClientRectValues(el)
-        currBCLAR = c('calculateBaseContextualLayerPosition')({
-          align: f,
-          contextRect: rectValue,
-          contextualLayerSize: g ? null : R.current,
-          fixed: currBCLAR,
-          offsetRect: documentElement,
-          position: I,
-          screenRect: viewportMargin,
+        const contextualLayerPosition = calculateBaseContextualLayerPosition({
+          align,
+          contextRect: contextRect,
+          contextualLayerSize: disableAutoAlign ? null : R.current,
+          fixed: isFixOrSticky,
+          offsetRect: offsetRect,
+          position: positionReducer,
+          screenRect: screenRect,
         })
-        documentElement = currBCLAR.adjustment
-        viewportMargin = currBCLAR.style
-        currBCLAR = Q.current
-        if (currBCLAR != null) {
-          var i = Object.keys(viewportMargin)
+        const adjustment = contextualLayerPosition.adjustment
+        const style = contextualLayerPosition.style
+        const currQ = Q.current
+        if (currQ != null) {
+          var i = Object.keys(style)
           for (var j = 0; j < i.length; j++) {
             var k = i[j],
-              l = viewportMargin[k]
+              // @ts-ignore
+              l = style[k]
             l != null
-              ? currBCLAR.style.setProperty(k, l)
-              : currBCLAR.style.removeProperty(k)
+              ? currQ.style.setProperty(k, l)
+              : currQ.style.removeProperty(k)
           }
         }
-        J({
-          adjustment: documentElement,
+        dispatch({
+          adjustment: adjustment,
           contextSize: {
-            height: rectValue.bottom - rectValue.top,
-            width: rectValue.right - rectValue.left,
+            height: contextRect.bottom - contextRect.top,
+            width: contextRect.right - contextRect.left,
           },
           type: 'reposition',
         })
       },
-      [K, T, S, L, g, f, I, C],
+      [
+        baseContextualLayerAnchorRootContextValue,
+        getAdjustedViewportMargins,
+        getContextValue,
+        baseScrollableAreaContextValue,
+        disableAutoAlign,
+        align,
+        positionReducer,
+        onIndeterminatePosition,
+      ],
+    )
+
+    const W = useCallback(
+      function (a: any) {
+        a === LayoutAnimationEventType.Start && dispatch(!0),
+          a === LayoutAnimationEventType.Stop && (dispatch(!1), V())
+      },
+      [V, dispatch],
     )
 
     return <div />
@@ -728,6 +748,7 @@ __d(
           },
           [K, T, S, L, g, f, I, C],
         ),
+        //
         W = i(
           function (a) {
             a === d('LayoutAnimationEvents').LayoutAnimationEventType.Start &&

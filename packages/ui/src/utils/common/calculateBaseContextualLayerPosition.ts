@@ -189,7 +189,7 @@ type PositioningProps = {
     height: number
     width: number
   }
-  isFixed: boolean
+  fixed: boolean
   offsetRect: {
     bottom: number
     left: number
@@ -211,7 +211,7 @@ export function calculateBaseContextualLayerPosition({
   align,
   contextRect,
   contextualLayerSize,
-  isFixed,
+  fixed: isFixed,
   offsetRect,
   position,
   screenRect,
@@ -362,7 +362,7 @@ export function calculateBaseContextualLayerPosition({
   transformationStyles.transform = transformationText
   return {
     adjustment: offsetRect,
-    style: isFixed,
+    style: transformationStyles,
   }
 }
 
