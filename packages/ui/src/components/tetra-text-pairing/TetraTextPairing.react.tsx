@@ -85,7 +85,7 @@ type TetraTextPairingProps = {
   textAlign?: 'auto' | 'start' | 'center' | 'end'
 }
 
-export default function TetraTextPairingProps({
+export default function TetraTextPairingReact({
   body,
   bodyColor = 'primary',
   bodyLineLimit,

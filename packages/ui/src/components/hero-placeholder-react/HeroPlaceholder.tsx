@@ -21,7 +21,7 @@ import HeroFallbackTracker from '../hero-fallback-tracker-react/HeroFallbackTrac
 type HeroPlaceholderProps = {
   children?: ReactNode
   fallback?: ReactNode
-  name: string
+  name?: string
   unstable_avoidThisFallback?: any
   unstable_onSuspense?: any
 }

@@ -23,10 +23,10 @@ function n({ cb }: { cb: any }) {
   return null
 }
 
-type CometPlaceholderImplProps = {
+export type CometPlaceholderImplProps = {
   children?: ReactNode
   fallback?: any
-  name: string
+  name?: string
   unstable_avoidThisFallback?: any
   unstable_onSuspense?: any
 }

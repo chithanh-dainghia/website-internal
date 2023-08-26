@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-type BaseContextualLayerAvailableHeightContextProps = {}
+type BaseContextualLayerAvailableHeightContextProps = number
 
 const BaseContextualLayerAvailableHeightContext = createContext<
   BaseContextualLayerAvailableHeightContextProps | undefined

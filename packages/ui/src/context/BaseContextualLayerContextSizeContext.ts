@@ -1,6 +1,9 @@
 import { createContext } from 'react'
 
-type BaseContextualLayerContextSizeContextProps = {}
+type BaseContextualLayerContextSizeContextProps = {
+  width: number
+  height: number
+}
 
 const BaseContextualLayerContextSizeContext = createContext<
   BaseContextualLayerContextSizeContextProps | undefined

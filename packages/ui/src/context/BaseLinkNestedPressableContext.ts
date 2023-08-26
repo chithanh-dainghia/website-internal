@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-type BaseLinkNestedPressableContextProps = {}
+type BaseLinkNestedPressableContextProps = boolean
 
 const BaseLinkNestedPressableContext = createContext<
   BaseLinkNestedPressableContextProps | undefined
