@@ -4,14 +4,14 @@ import BaseTooltipImplReact, {
 import CometProgressRingIndeterminateReact from '../comet-progress-ring-indeterminate-react/CometProgressRingIndeterminate.react'
 import TetraTextPairingReact from '../tetra-text-pairing/TetraTextPairing.react'
 
-type CometTooltioDeferredImplProps = {
+export type CometTooltioDeferredImplProps = {
   headline?: undefined
   isVisible: boolean
   tooltip?: any
   tooltipTheme?: any
 } & BaseTooltipImplProps
 
-export default function CometTooltipDeferredImpl({
+export default function CometTooltipDeferredImplReact({
   headline,
   tooltip,
   tooltipTheme = 'invert',
