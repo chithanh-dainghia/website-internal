@@ -1,3 +1,6 @@
+/**
+ * @type {import('eslint').Linter.Config}
+ */
 module.exports = {
   env: {
     node: true,
@@ -14,6 +17,9 @@ module.exports = {
   ],
   plugins: ['import', '@typescript-eslint'],
   parserOptions: {
+    babelOptions: {
+      presets: [require.resolve('next/babel')],
+    },
     project: ['./tsconfig.json'],
   },
   settings: {

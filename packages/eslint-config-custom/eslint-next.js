@@ -1,7 +1,15 @@
+/**
+ * @type {import('eslint').Linter.Config}
+ */
 module.exports = {
   env: {
     browser: true,
     node: true,
+  },
+  parserOptions: {
+    babelOptions: {
+      presets: [require.resolve('next/babel')],
+    },
   },
   extends: [
     'next',
