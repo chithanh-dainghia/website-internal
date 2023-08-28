@@ -1,7 +1,7 @@
 import '../styles/index.css'
 
 import React from 'react'
-import { GriffelJSRegistry } from '@/components/registry'
+import AppProvider from '@/utils/registry'
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html id="portal" lang="en" dir="ltr">
       <body className="body-custom system-fonts--body segoe">
-        <GriffelJSRegistry>{children}</GriffelJSRegistry>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   )

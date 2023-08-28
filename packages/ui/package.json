@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
@@ -17,9 +17,7 @@
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6",
     "ua-parser-js": "1.0.35",
-    "resize-observer-polyfill": "1.5.1"
-  },
-  "dependencies": {
-    "@griffel/react": "1.5.14"
+    "resize-observer-polyfill": "1.5.1",
+    "@fluentui/react-components": "^9.30.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "react-dom",
-  "version": "0.0.0-experimental-98f3f14d2-20230818",
+  "version": "1.0.0",
   "description": "React package for working with the DOM.",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "scheduler": "0.0.0-experimental-98f3f14d2-20230818"
   },
   "peerDependencies": {
-    "react": "workspace:*"
+    "react": "*"
   },
   "files": [
     "LICENSE",

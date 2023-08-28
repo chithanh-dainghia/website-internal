@@ -1,3 +1,0 @@
-import CometVisualCompletionAttributes from './VisualCompletionAttributes'
-
-export default CometVisualCompletionAttributes

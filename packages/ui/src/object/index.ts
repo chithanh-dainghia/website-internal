@@ -1,1 +1,0 @@
-export { SimpleHook } from './SimpleHook'
