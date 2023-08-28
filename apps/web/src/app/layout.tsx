@@ -3,6 +3,14 @@ import '../styles/index.css'
 import React from 'react'
 import AppProvider from '@/utils/registry'
 
+import {
+  AppLayout,
+  LayoutNavigationAppList,
+  LayoutNavigationAppRoot,
+} from '@/features/layout'
+
+import { Provider as GeminiNavAppRootProvider } from '@/features/layout/context/gemini-nav-app-root-context'
+
 export default function RootLayout({
   children,
 }: {
@@ -11,7 +19,17 @@ export default function RootLayout({
   return (
     <html id="portal" lang="en" dir="ltr">
       <body className="body-custom system-fonts--body segoe">
-        <AppProvider>{children}</AppProvider>
+        <GeminiNavAppRootProvider>
+          <AppProvider className="app-custom">
+            <AppLayout>
+              <LayoutNavigationAppRoot>
+                <LayoutNavigationAppList />
+                {/* <LayoutNavigationAppChannel /> */}
+              </LayoutNavigationAppRoot>
+              {children}
+            </AppLayout>
+          </AppProvider>
+        </GeminiNavAppRootProvider>
       </body>
     </html>
   )

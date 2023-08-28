@@ -398,8 +398,9 @@ hr {
 
 /*  */
 
-.body-custom {
-  background-color: var(--web-wash);
+.body-custom,
+.app-custom {
+  background-color: var(--web-wash) !important;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
 }

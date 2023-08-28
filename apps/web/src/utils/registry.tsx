@@ -9,17 +9,18 @@ import {
   renderToStyleElements,
   FluentProvider,
   teamsLightTheme,
+  FluentProviderProps,
 } from '@fluentui/react-components'
 import { useServerInsertedHTML } from 'next/navigation'
 
-type AppProviderProps = React.PropsWithChildren
+type AppProviderProps = React.PropsWithChildren & FluentProviderProps
 
 /**
  * // https://nextjs.org/docs/app/building-your-application/styling/css-in-js#configuring-css-in-js-in-app
  * @param param0
  * @returns
  */
-export default function AppProvider({ children }: AppProviderProps) {
+export default function AppProvider({ children, ...props }: AppProviderProps) {
   // A style registry to collect all CSS rules in a render.
   const [renderer] = React.useState(() => createDOMRenderer())
 
@@ -33,7 +34,9 @@ export default function AppProvider({ children }: AppProviderProps) {
   return (
     <RendererProvider renderer={renderer}>
       <SSRProvider>
-        <FluentProvider theme={teamsLightTheme}>{children}</FluentProvider>
+        <FluentProvider theme={teamsLightTheme} {...props}>
+          {children}
+        </FluentProvider>
       </SSRProvider>
     </RendererProvider>
   )
