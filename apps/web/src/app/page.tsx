@@ -1,13 +1,10 @@
 import React from 'react'
-
-import { Default } from '@/components/demo'
+import { Icon } from 'ui'
 
 export default function Page() {
   return (
     <div>
-      <Default>
-        <h1>2</h1>
-      </Default>
+      <Icon name="home-outline" />
     </div>
   )
 }

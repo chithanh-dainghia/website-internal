@@ -1,7 +1,9 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useMemo } from 'react'
 import { noop } from 'ui'
 
 import { useNavUIState } from '../../context/gemini-nav-and-channel-context'
+import { useGeminiAppRoot } from '../../context/gemini-nav-app-root-context'
+import { WorkGalahadUIAppsListItem } from '../work-galahad-ui-apps-list-item'
 
 type WorkGalahadAppTabItemProps = {
   bagdeCount: number
@@ -16,7 +18,7 @@ const getSelectedAppTabID = () => {
 }
 
 const WorkGalahadAppTabItem = forwardRef<
-  HTMLElement,
+  HTMLDivElement,
   WorkGalahadAppTabItemProps
 >(({ bagdeCount, isFirst, onHoverIn, onPress, tab }, ref) => {
   const {
@@ -33,7 +35,12 @@ const WorkGalahadAppTabItem = forwardRef<
   //  c("WorkGalahadNavUIState").useNavUIState();
   const { isAutoHideEnabled } = useNavUIState()
 
-  return <div />
+  const { getSelectedAppTab } = useGeminiAppRoot()
+  const isActive = useMemo(() => getSelectedAppTab(id), [id])
+
+  const A = o(a, e)
+
+  return <WorkGalahadUIAppsListItem withTopSpacing={!isFirst} ref={ref} />
 })
 
 // https://wmyikhafek.workplace.com/work/knowledge

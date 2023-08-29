@@ -18,6 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html id="portal" lang="en" dir="ltr">
+      <link
+        rel="preload"
+        href="/assets/icons/sprite.svg"
+        as="image"
+        type="image/svg+xml"
+      />
       <body className="body-custom system-fonts--body segoe">
         <GeminiNavAppRootProvider>
           <AppProvider className="app-custom">
