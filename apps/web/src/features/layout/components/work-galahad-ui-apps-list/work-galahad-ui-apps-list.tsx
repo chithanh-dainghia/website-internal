@@ -9,7 +9,7 @@ export default function WorkGalahadUIAppsList() {
 
   return (
     <div role="grid" className={classes.root}>
-      1{/* <WorkGalahadAppTabTopApps /> */}
+      <WorkGalahadAppTabTopApps />
       {/* WorkNavigationCollapseButtonAndNubs.react */}
     </div>
   )
