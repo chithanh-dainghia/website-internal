@@ -51,14 +51,16 @@ export default function WorkGalahadAppTabTopApps() {
 
   const notifyBadgeCount = 1
 
-  return WORK_APP_TAB_SET.map((tab, index) => (
-    <WorkGalahadAppTabItem
-      badgeCount={tab.id === 'notifications' ? notifyBadgeCount : 0}
-      isFirst={index === 0}
-      onHoverIn={emptyFunction}
-      onPress={emptyFunction}
-      tab={tab}
-      key={tab.id}
-    />
-  ))
+  // return WORK_APP_TAB_SET.map((tab, index) => (
+  //   <WorkGalahadAppTabItem
+  //     badgeCount={tab.id === 'notifications' ? notifyBadgeCount : 0}
+  //     isFirst={index === 0}
+  //     onHoverIn={emptyFunction}
+  //     onPress={emptyFunction}
+  //     tab={tab}
+  //     key={tab.id}
+  //   />
+  // ))
+
+  return <div>1</div>
 }

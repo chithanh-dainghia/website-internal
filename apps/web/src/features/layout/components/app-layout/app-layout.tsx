@@ -5,6 +5,8 @@ import React from 'react'
 import { mediaMinWidth1921 } from 'ui'
 
 import { makeStyles, mergeClasses } from '@fluentui/react-components'
+import { LayoutNavigationAppRoot } from '../layout-navigation-app-root'
+import { LayoutNavigationAppList } from '../layout-navigation-app-nav-list'
 
 type AppLayoutProps = JSX.IntrinsicElements['div']
 
@@ -20,7 +22,10 @@ export default function AppLayout({
       className={mergeClasses(classes.root, classes.flexRight, className)}
       {...props}
     >
-      {children}
+      <LayoutNavigationAppRoot>
+        <LayoutNavigationAppList />
+        {/* <LayoutNavigationAppChannel /> */}
+      </LayoutNavigationAppRoot>
     </div>
   )
 }
