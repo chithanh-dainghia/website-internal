@@ -21,7 +21,7 @@ export default function RoootLayout({
 }) {
   return (
     <>
-      <html id="portal" lang="en" dir="ltr">
+      <html id="portal" lang="vi" dir="ltr">
         <link
           rel="preload"
           href="/assets/icons/sprite.svg"

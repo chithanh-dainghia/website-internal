@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import {
   makeStyles,
   mergeClasses,
@@ -8,33 +9,40 @@ import {
 } from '@fluentui/react-components'
 import { LoginInput } from '../login-input'
 import { LoginButton } from '../login-button'
-import Link from 'next/link'
 
-export default function RoyalLoginForm() {
+export default function RoyalForgotPasswordForm() {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <div className={classes.text}>Đăng nhập</div>
+      <div className={classes.uiHeader}>
+        <div className={classes.text}>Quên mật khẩu</div>
+      </div>
+
+      <div className={mergeClasses('body-1', classes.textDisplay)}>
+        Vui lòng nhập địa chỉ email để khôi phục mật khẩu của bạn.
+      </div>
+
       <div className={classes.inputGroup}>
         <LoginInput placeholder="Địa chỉ mail" />
-        <LoginInput type="password" placeholder="Mật khẩu" />
       </div>
+
       <div className={classes.loginButtonWrapper}>
-        <LoginButton className={classes.loginButton}>Đăng nhập</LoginButton>
+        <LoginButton className={classes.loginButton}>Gửi</LoginButton>
       </div>
+
       <div className={classes.forgotPasswordWrapper}>
         <Link
-          href="/login/forgot-password"
+          href="/login"
           className={mergeClasses('caption', classes.forgotPassword)}
         >
-          Quên mật khẩu ?
+          Có tài khoản, đăng nhập ?
         </Link>
       </div>
     </div>
   )
 }
 
-const LOGIN_WIDTH = '396px'
+const FORGOT_PASSWORD_WIDTH = '500px'
 
 const useStyles = makeStyles({
   root: {
@@ -47,12 +55,17 @@ const useStyles = makeStyles({
     paddingRight: '1rem',
     ...shorthands.borderRadius('.5rem'),
     ...shorthands.borderStyle('none'),
-    width: LOGIN_WIDTH,
+    width: FORGOT_PASSWORD_WIDTH,
     boxShadow: '0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1)',
 
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
+  },
+
+  uiHeader: {
+    width: '100%',
+    ...shorthands.borderBottom('1px', 'solid', 'rgba(0,0,0,.1)'),
   },
 
   text: {
@@ -61,13 +74,21 @@ const useStyles = makeStyles({
     fontSize: '22px',
     color: 'var(--primary-text)',
     marginBottom: '1rem',
+    textAlign: 'center',
+  },
+
+  textDisplay: {
+    alignSelf: 'flex-start',
+    marginTop: '1rem',
+    color: 'var(--primary-text)',
+    // fontWeight: '500',
   },
 
   inputGroup: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    marginTop: '6px',
+    marginTop: '1rem',
     marginBottom: '6px',
     ...shorthands.gap('.75rem'),
   },

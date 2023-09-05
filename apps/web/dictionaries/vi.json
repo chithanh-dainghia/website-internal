@@ -1,0 +1,8 @@
+{
+  "login": {
+    "phone": "Số điện thoại",
+    "password": "Mật khẩu",
+    "login": "Đăng nhập",
+    "forgot-password": "Quên mật khẩu ?"
+  }
+}

@@ -1,6 +1,6 @@
-import { LoginScreen } from '@/features/login'
 import React from 'react'
+import { RoyalLoginForm } from '@/features/login'
 
-export default function LoginPage() {
-  return <LoginScreen />
+export default async function LoginPage() {
+  return <RoyalLoginForm />
 }

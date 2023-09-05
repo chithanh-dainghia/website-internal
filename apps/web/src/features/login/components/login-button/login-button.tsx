@@ -11,12 +11,7 @@ export default function LoginButton({
 }: JSX.IntrinsicElements['button']) {
   const classes = useStyles()
 
-  return (
-    <button
-      className={mergeClasses(classes.root, className)}
-      {...props}
-    ></button>
-  )
+  return <button className={mergeClasses(classes.root, className)} {...props} />
 }
 
 const useStyles = makeStyles({
@@ -24,6 +19,39 @@ const useStyles = makeStyles({
     backgroundColor: '#1877f2',
     boxShadow: '0 0 0 2px #e7f3ff',
     outlineStyle: 'none',
-    ...shorthands.border('1px', 'solid', '#1b74e4'),
+    ...shorthands.borderStyle('none'),
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+    textAlign: 'center',
+    textShadow: 'none',
+    verticalAlign: 'middle',
+    position: 'relative',
+
+    ...shorthands.transition([
+      ['background-color', '200ms', '0s', 'cubic-bezier(.08,.52,.52,1)'],
+      ['box-shadow', '200ms', '0s', 'cubic-bezier(.08,.52,.52,1)'],
+      ['transform', '200ms', '0s', 'cubic-bezier(.08,.52,.52,1)'],
+    ]),
+
+    color: '#fff',
+
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecorationLine: 'none',
+    whiteSpace: 'nowrap',
+
+    fontSize: '20px',
+    fontWeight: '500',
+    letterSpacing: '.15px',
+
+    ...shorthands.borderRadius('6px'),
+
+    ':hover': {
+      backgroundColor: '#1780E6',
+      ...shorthands.borderColor('#365899'),
+      textDecorationLine: 'none',
+    },
   },
 })

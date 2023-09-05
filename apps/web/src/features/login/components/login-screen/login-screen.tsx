@@ -1,18 +1,17 @@
 'use client'
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Logo } from '../logo'
 import { makeStyles, shorthands } from '@fluentui/react-components'
-import { RoyalLoginForm } from '../royal-login-form'
 
-export default function LoginScreen() {
+export default function LoginScreen({ children }: { children: ReactNode }) {
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <Logo />
-      <RoyalLoginForm />
+      {children}
     </div>
   )
 }
@@ -23,6 +22,6 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    ...shorthands.gap('1rem'),
+    ...shorthands.gap('2rem'),
   },
 })
