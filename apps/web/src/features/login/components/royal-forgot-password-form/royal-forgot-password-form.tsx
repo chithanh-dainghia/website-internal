@@ -32,7 +32,7 @@ export default function RoyalForgotPasswordForm() {
 
       <div className={classes.forgotPasswordWrapper}>
         <Link
-          href="/login"
+          href="/signin"
           className={mergeClasses('caption', classes.forgotPassword)}
         >
           Có tài khoản, đăng nhập ?

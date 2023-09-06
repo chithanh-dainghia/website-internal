@@ -1,11 +1,10 @@
 import React from 'react'
 
-import { Icon } from 'ui'
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]/route'
 
-export default function Page() {
-  return (
-    <div>
-      <Icon name="home-outline" />
-    </div>
-  )
+export default async function Page() {
+  const session: any = await getServerSession(authOptions)
+
+  return <div>{session}</div>
 }

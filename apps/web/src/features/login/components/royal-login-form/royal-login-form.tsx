@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useTransition } from 'react'
 import {
   makeStyles,
   mergeClasses,
@@ -9,28 +9,71 @@ import {
 import { LoginInput } from '../login-input'
 import { LoginButton } from '../login-button'
 import Link from 'next/link'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { LoginFormDataSchema } from '@/lib/schema'
+import { signIn } from 'next-auth/react'
+
+type Inputs = z.infer<typeof LoginFormDataSchema>
 
 export default function RoyalLoginForm() {
   const classes = useStyles()
+
+  const [isPending, startTransition] = useTransition()
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: zodResolver(LoginFormDataSchema),
+  })
+
+  const processForm: SubmitHandler<Inputs> = async data => {
+    console.log(data)
+    // Replace this with a server action or fetch an API endpoint to authenticate
+
+    startTransition(async () => {
+      await signIn('credentials', {
+        ...data,
+        redirect: false,
+      })
+    })
+  }
+
   return (
-    <div className={classes.root}>
+    <form onSubmit={handleSubmit(processForm)} className={classes.root}>
       <div className={classes.text}>Đăng nhập</div>
       <div className={classes.inputGroup}>
-        <LoginInput placeholder="Địa chỉ mail" />
-        <LoginInput type="password" placeholder="Mật khẩu" />
+        <LoginInput
+          autoComplete="off"
+          placeholder="Địa chỉ mail"
+          {...register('email')}
+          errorMessage={errors.email?.message}
+        />
+        <LoginInput
+          autoComplete="off"
+          type="password"
+          placeholder="Mật khẩu"
+          {...register('password')}
+          errorMessage={errors.password?.message}
+        />
       </div>
       <div className={classes.loginButtonWrapper}>
-        <LoginButton className={classes.loginButton}>Đăng nhập</LoginButton>
+        <LoginButton isPending={isPending} className={classes.loginButton}>
+          Đăng nhập
+        </LoginButton>
       </div>
       <div className={classes.forgotPasswordWrapper}>
         <Link
-          href="/login/forgot-password"
+          href="/signin/forgot-password"
           className={mergeClasses('caption', classes.forgotPassword)}
         >
           Quên mật khẩu ?
         </Link>
       </div>
-    </div>
+    </form>
   )
 }
 

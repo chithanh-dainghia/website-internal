@@ -10,7 +10,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const pathName = usePathname()
 
   const Layout = useMemo(
-    () => (pathName.includes('/login') ? LoginLayout : AppLayout),
+    () =>
+      pathName.includes('/signin') || pathName.includes('/register')
+        ? LoginLayout
+        : AppLayout,
     [pathName],
   )
 
