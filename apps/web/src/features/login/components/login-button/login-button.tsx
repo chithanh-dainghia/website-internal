@@ -53,7 +53,7 @@ export default function LoginButton({
               // backdropFilter: 'grayscale(1)',
             }}
           >
-            <SpinnerIcon color="#FFFFFF" size={36} />
+            <SpinnerIcon color="#FFFFFF" size={32} />
           </div>
         </div>
       )}

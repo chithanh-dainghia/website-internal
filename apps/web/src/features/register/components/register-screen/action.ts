@@ -5,7 +5,7 @@ import { RegisterFormDataSchema } from '@/lib/schema'
 
 import bscrypt from 'bcrypt'
 
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 export type Inputs = z.infer<typeof RegisterFormDataSchema>
 

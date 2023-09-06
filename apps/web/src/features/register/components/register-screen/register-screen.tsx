@@ -101,7 +101,7 @@ export default function RegisterScreen() {
             <RegisterInput
               autoComplete="off"
               placeholder="Địa chỉ mail"
-              defaultValue="tienlx97@gmail.com"
+              defaultValue="tienlx98@gmail.com"
               {...register('email')}
               errorMessage={errors.email?.message}
             />

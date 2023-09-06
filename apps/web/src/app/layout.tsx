@@ -7,6 +7,7 @@ import AppProvider from '@/utils/registry'
 
 import { Provider as GeminiNavAppRootProvider } from '@/features/layout/context/gemini-nav-app-root-context'
 import { RootLayout } from '@/features/layout/components/root-layout'
+import { AuthProvider } from '@/components'
 
 // If loading a variable font, you don't need to specify the font weight
 const spaceGrotesk = Space_Grotesk({
@@ -34,11 +35,13 @@ export default function RoootLayout({
           }}
           className={`body-custom system-fonts--body segoe`}
         >
-          <GeminiNavAppRootProvider>
-            <AppProvider className="app-custom">
-              <RootLayout>{children}</RootLayout>
-            </AppProvider>
-          </GeminiNavAppRootProvider>
+          <AuthProvider>
+            <GeminiNavAppRootProvider>
+              <AppProvider className="app-custom">
+                <RootLayout>{children}</RootLayout>
+              </AppProvider>
+            </GeminiNavAppRootProvider>
+          </AuthProvider>
         </body>
       </html>
     </>

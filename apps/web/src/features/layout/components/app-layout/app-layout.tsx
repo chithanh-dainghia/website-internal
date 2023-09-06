@@ -25,6 +25,7 @@ export default function AppLayout({
       <LayoutNavigationAppRoot>
         <LayoutNavigationAppList />
         {/* <LayoutNavigationAppChannel /> */}
+        {children}
       </LayoutNavigationAppRoot>
     </div>
   )

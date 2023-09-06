@@ -1,10 +1,17 @@
 import React from 'react'
 
 import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 export default async function Page() {
-  const session: any = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
 
-  return <div>{session}</div>
+  console.log(session)
+
+  return (
+    <>
+      <h1>Server Session</h1>
+      <pre>{JSON.stringify(session)}</pre>
+    </>
+  )
 }
