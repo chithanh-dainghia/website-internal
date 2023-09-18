@@ -595,16 +595,18 @@ function determineElementTag(
     target?: any
   },
 ): string {
-  var tag: string = 'div'
+  let tag = 'div'
   if (
     Object.keys(specialElements).includes(elementType) &&
-    additionalData != null &&
-    additionalData.url != null
+    additionalData !== undefined &&
+    additionalData.url != undefined
   ) {
     tag = 'a'
-  } else if (elementType != null) {
-    var mappedTag: string | undefined = specialElements[elementType]
-    mappedTag != null && (tag = mappedTag)
+  } else if (elementType !== undefined) {
+    const mappedTag: string | undefined = specialElements[elementType]
+    if (mappedTag !== undefined) {
+      tag = mappedTag
+    }
   }
   return tag
 }
