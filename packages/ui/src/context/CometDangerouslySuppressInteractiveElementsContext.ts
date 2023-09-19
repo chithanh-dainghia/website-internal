@@ -1,9 +1,8 @@
 import { createContext } from 'react'
 
-type CometDangerouslySuppressInteractiveElementsContextProps = number
+type CometDangerouslySuppressInteractiveElementsContextProps = boolean
 
-const CometDangerouslySuppressInteractiveElementsContext = createContext<
-  CometDangerouslySuppressInteractiveElementsContextProps | undefined
->(undefined)
+const CometDangerouslySuppressInteractiveElementsContext =
+  createContext<CometDangerouslySuppressInteractiveElementsContextProps>(false)
 
 export default CometDangerouslySuppressInteractiveElementsContext

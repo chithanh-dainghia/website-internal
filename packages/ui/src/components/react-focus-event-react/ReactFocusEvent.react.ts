@@ -9,7 +9,7 @@ import {
 import checkPassiveEventsSupported from '@ui/utils/common/checkPassiveEventsSupported'
 import ReactUseEventReact from '../react-use-event-react/ReactUseEvent.react'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
-import gkx from '@ui/etc/gkx'
+// import gkx from '@ui/etc/gkx'
 import {
   hasEventHookPropagationStopped,
   stopEventHookPropagation,
@@ -34,6 +34,8 @@ const eventOption = {
 
 let isFocusVisible = true
 let firstTimeListener = false
+
+const gkx5403 = false
 
 function addEventListenerArr() {
   pointerEventArray.forEach(function (eventName) {
@@ -150,7 +152,14 @@ export function useFocus(
             (focusRefCurr.isFocusVisible = isFocusVisible))
         }
         focusinEventHandler.setListener(refCurr, function (event: any) {
-          if (!gkx.k('5403') && disabled === !0) return
+          // if (!gkx5403 && disabled === !0) {
+          //   return
+          // }
+
+          if (!gkx5403 && disabled === !0) {
+            return
+          }
+
           if (hasEventHookPropagationStopped(event, 'useFocus')) return
           stopEventHookPropagation(event, 'useFocus')
 
@@ -165,7 +174,9 @@ export function useFocus(
               onFocusVisibleChange(true))
         })
         focusoutEventHandler.setListener(refCurr, function (event: any) {
-          if (!gkx.k('5403') && disabled === true) return
+          if (!gkx5403 && disabled === true) {
+            return
+          }
           if (hasEventHookPropagationStopped(event, 'useFocus')) return
           stopEventHookPropagation(event, 'useFocus')
           onFocusCallback(event)
@@ -245,7 +256,7 @@ export function useFocusWithin(
             onFocusWithinVisibleChange && onFocusWithinVisibleChange(param))
         }),
         focusinEventHandler.setListener(listener, function (event: any) {
-          if (!gkx.k('5403') && disabled === true) return
+          if (!gkx5403 && disabled === true) return
           if (hasEventHookPropagationStopped(event, 'useFocusWithin')) return
           refCurrent.isFocused ||
             ((refCurrent.isFocused = true),
@@ -261,7 +272,7 @@ export function useFocusWithin(
           onFocusWithin && onFocusWithin(event)
         }),
         focusoutEventHandler.setListener(listener, function (event: any) {
-          if (!gkx.k('5403') && disabled === true) return
+          if (!gkx5403 && disabled === true) return
           var relatedTarget = event.nativeEvent.relatedTarget
           if (hasEventHookPropagationStopped(event, 'useFocusWithin')) return
           refCurrent.isFocused &&
@@ -275,7 +286,7 @@ export function useFocusWithin(
             : stopEventHookPropagation(event, 'useFocusWithin')
         }),
         beforeblurEventHandler.setListener(listener, function (event: any) {
-          if (!gkx.k('5403') && disabled === true) return
+          if (!gkx5403 && disabled === true) return
           onBeforeBlurWithin &&
             (onBeforeBlurWithin(event),
             afterblurEventHandler.setListener(document, function (event: any) {
@@ -324,7 +335,7 @@ function useInteractionHandlers() {
 function useDOMEventListener(domEventName: any, eventOption: any) {
   const unsafeRef = useUnsafeRef_DEPRECATED<any>(null)
   let unsafeRefCurrent = unsafeRef.current
-  gkx.k('1703328') && eventOption && (eventOption.passive = void 0)
+  eventOption && (eventOption.passive = undefined)
   if (unsafeRefCurrent === null) {
     const eventHandler = unstable_createEventHandle(domEventName, eventOption)
     const map = new Map()
@@ -332,13 +343,13 @@ function useDOMEventListener(domEventName: any, eventOption: any) {
     unsafeRefCurrent = {
       setListener: function (key: any, cb: any) {
         var c = map.get(key)
-        c !== void 0 && c()
+        c !== undefined && c()
         if (cb === null) {
           map['delete'](key)
           return
         }
         c = eventHandler(key, function () {
-          cb.apply(void 0, arguments)
+          cb.apply(undefined, arguments)
         })
         map.set(key, c)
       },
@@ -383,7 +394,7 @@ export function useFocusWithinStrictMode({
               onFocusWithinVisibleChange && onFocusWithinVisibleChange(param))
           }),
           focusinHandler.setListener(props, function (param: any) {
-            if (!gkx.k('5403') && disabled === true) return
+            if (!gkx5403 && disabled === true) return
             if (hasEventHookPropagationStopped(param, 'useFocusWithin')) return
             focusRefCurrent.isFocused ||
               ((focusRefCurrent.isFocused = true),
@@ -399,7 +410,7 @@ export function useFocusWithinStrictMode({
             onFocusWithin && onFocusWithin(param)
           }),
           focusoutHandler.setListener(props, function (param: any) {
-            if (!gkx.k('5403') && disabled === true) return
+            if (!gkx5403 && disabled === true) return
             var relatedTarget = param.nativeEvent.relatedTarget
             if (hasEventHookPropagationStopped(param, 'useFocusWithin')) return
             focusRefCurrent.isFocused &&
@@ -413,7 +424,7 @@ export function useFocusWithinStrictMode({
               : stopEventHookPropagation(param, 'useFocusWithin')
           }),
           beforeblurHandler.setListener(props, function (param: any) {
-            if (!gkx.k('5403') && disabled === true) return
+            if (!gkx5403 && disabled === true) return
             onBeforeBlurWithin &&
               (onBeforeBlurWithin(param),
               afterblurHandler.setListener(document, function (e: any) {

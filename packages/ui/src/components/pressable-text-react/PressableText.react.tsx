@@ -4,7 +4,6 @@ import {
   shorthands,
 } from '@fluentui/react-components'
 import WebPressableGroupContext from '@ui/context/WebPressableGroupContext'
-import gkx from '@ui/etc/gkx'
 import { useMergeRefs } from '@ui/hooks'
 import { usePressability } from '@ui/hooks/WebPressability'
 import { makeEventOptions } from '@ui/utils/common/passiveEventListenerUtil'
@@ -19,6 +18,8 @@ import {
   jsx,
 } from 'react'
 import BaseFocusRing from '../base-focus-ring/BaseFocusRing'
+
+const gkx5403 = false
 
 // __d(
 //   'PressableText.react',
@@ -747,10 +748,10 @@ export default function PressableTextReact(props: any) {
   anchorTagOrButtonRole
     ? ariaHidden === true ||
       focusable === false ||
-      (!gkx.k('5403') && _disabled === true)
+      (!gkx5403 && _disabled === true)
       ? (tabIndexValue = -1)
       : (tabIndexValue = 0)
-    : gkx.k('5403')
+    : gkx5403
     ? ariaHidden !== true &&
       focusable !== false &&
       accessibilityRole !== 'none' &&

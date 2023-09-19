@@ -2,7 +2,6 @@ import { useLayoutEffect } from 'react'
 // @ts-ignore
 import { unstable_createEventHandle } from 'react-dom'
 
-import gkx from '@ui/etc/gkx'
 import useUnsafeRef_DEPRECATED from '@ui/hooks/useUnsafeRef_DEPRECATED'
 
 type EventOption = {
@@ -13,7 +12,7 @@ function ReactUseEventReact(domEventName: string, option?: EventOption) {
   const ref = useUnsafeRef_DEPRECATED<any>(null)
   const current = ref.current
 
-  gkx.k('1703328') && option && (option.passive = undefined)
+  option && (option.passive = undefined)
 
   if (ref.current === null) {
     var unstableEventHandle = unstable_createEventHandle(domEventName, option)

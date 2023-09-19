@@ -1,5 +1,3 @@
-import gkx from '@ui/etc/gkx'
-
 const canWork = !!(
   typeof window !== 'undefined' &&
   typeof window.document !== 'undefined' &&
@@ -8,7 +6,7 @@ const canWork = !!(
 
 let b = false
 
-if (canWork && !gkx.k('1703328'))
+if (canWork)
   try {
     const d = {}
     Object.defineProperty(d, 'passive', {

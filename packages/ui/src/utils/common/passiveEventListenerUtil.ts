@@ -1,21 +1,21 @@
-let b = !1
+let _isPassiveEventListenerSupported = false
 
 try {
-  const c = Object.defineProperty({}, 'passive', {
+  const options = Object.defineProperty({}, 'passive', {
     get: function () {
-      b = !0
+      _isPassiveEventListenerSupported = true
     },
   })
   // @ts-ignore
-  window.addEventListener('test', null, c)
-} catch (a) {}
+  window.addEventListener('test', null, options)
+} catch (err) {}
 
-export const isPassiveEventListenerSupported = b
+export const isPassiveEventListenerSupported = _isPassiveEventListenerSupported
 
 export function makeEventOptions(a: any) {
   return isPassiveEventListenerSupported
     ? a
     : typeof a === 'boolean'
     ? a
-    : a.capture || !1
+    : a.capture || false
 }

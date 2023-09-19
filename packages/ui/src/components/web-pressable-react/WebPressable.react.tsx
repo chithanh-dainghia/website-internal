@@ -694,43 +694,72 @@ var s = function (el: any) {
   return false
 }
 
-var useABCHook = function (a: any, b: any, c: any) {
+var useTouchEventHandler = function (
+  targetRef: any,
+  webPressableGroupContextValue: any,
+  callbackFn: any,
+) {
   useEffect(
     function () {
-      var curr = a.current
+      var curr = targetRef.current
       if (!curr || !curr.addEventListener || !isElementInDocument(curr)) return
-      if (!b && !(isBrowser('Safari') || isBrowser('Mobile Safari'))) return
-      b && b.register(curr, c)
+      if (
+        !webPressableGroupContextValue &&
+        !(isBrowser('Safari') || isBrowser('Mobile Safari'))
+      )
+        return
+      webPressableGroupContextValue &&
+        webPressableGroupContextValue.register(curr, callbackFn)
       var listener = function (a: any) {
-          b && (a.preventDefault(), b.onTouchStart())
-          if (!(isBrowser('Safari') || isBrowser('Mobile Safari'))) return
-          var c =
-            (a = window) == null
-              ? undefined
-              : (a = a.document) == null
-              ? undefined
-              : a.body
-          if (c == null) return
-          c.style.WebkitUserSelect = 'none'
-          var e = makeEventOptions({
+          webPressableGroupContextValue &&
+            (a.preventDefault(), webPressableGroupContextValue.onTouchStart())
+          if (!(isBrowser('Safari') || isBrowser('Mobile Safari'))) {
+            return
+          }
+
+          if (window === undefined || window?.document === undefined) {
+            return
+          }
+
+          // var c =
+          //   (a = window) == null
+          //     ? undefined
+          //     : (a = a.document) == null
+          //     ? undefined
+          //     : a.body
+          // if (c == null) return
+          // c.style.WebkitUserSelect = 'none'
+
+          window.document.body.style.webkitUserSelect = 'none'
+
+          var eventOption = makeEventOptions({
             passive: true,
           })
-          a = function a() {
-            ;(c.style.WebkitUserSelect = null),
-              document.removeEventListener('touchend', a, e)
+
+          const touchendListener = () => {
+            // @ts-ignore
+            window.document.body.style.webkitUserSelect = null
+            // c.style.WebkitUserSelect = null
+            document.removeEventListener(
+              'touchend',
+              touchendListener,
+              eventOption,
+            )
           }
-          document.addEventListener('touchend', a, e)
+
+          document.addEventListener('touchend', touchendListener, eventOption)
         },
         options = makeEventOptions({
-          passive: !b,
+          passive: !webPressableGroupContextValue,
         })
       curr.addEventListener('touchstart', listener, options)
       return function () {
-        b && b.unRegister(curr),
+        webPressableGroupContextValue &&
+          webPressableGroupContextValue.unRegister(curr),
           curr.removeEventListener('touchstart', listener, options)
       }
     },
-    [b, c, a],
+    [webPressableGroupContextValue, callbackFn, targetRef],
   )
 }
 
@@ -907,7 +936,11 @@ const WebPressableReact = (props: any) => {
     [forwardedRef],
   )
 
-  useABCHook(targetRef, webPressableGroupContextValue, onPressCallBack)
+  useTouchEventHandler(
+    targetRef,
+    webPressableGroupContextValue,
+    onPressCallBack,
+  )
 
   let _tabIndex = -1
 
