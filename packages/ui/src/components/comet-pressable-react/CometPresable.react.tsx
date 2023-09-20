@@ -129,6 +129,11 @@ const CometPressable = forwardRef<HTMLElement, CometPressableProps>(
       />
     )
 
+    typeof children === 'function' ? children({
+      disabled,
+      
+    })
+
     return <div />
   },
 )
