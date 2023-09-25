@@ -1,13 +1,27 @@
-import React, { ReactNode, forwardRef, useCallback, useState } from 'react'
+import React, {
+  ReactNode,
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  // @ts-ignore
+  jsx,
+} from 'react'
 import CometPressableOverlay from '../comet-pressable-overlay/CometPressableOverlay.react'
+import CometContainerPressableContext from '@ui/context/CometContainerPressableContext'
+import CometDangerouslySuppressInteractiveElementsContext from '@ui/context/CometDangerouslySuppressInteractiveElementsContext'
+import { useMergeRefs } from '@ui/hooks'
 
 type CometPressableProps = {
   allowClickEventPropagation?: boolean
-  children?: ReactNode
+  children?: (...param: any) => any | ReactNode
   className_DEPRECATED?: string
   cursorDisabled?: boolean
   className?: string
   display?: 'block' | 'inline'
+  expanding?: string
   hideFocusOverlay?: boolean
   hideHoverOverlay?: boolean
   isContainerTarget?: boolean
@@ -36,6 +50,7 @@ type CometPressableProps = {
   suppressFocusRing?: boolean
   testOnly_pressed?: boolean
   testid?: any
+  onContextMenu: any
 }
 
 const CometPressable = forwardRef<HTMLElement, CometPressableProps>(
@@ -47,6 +62,7 @@ const CometPressable = forwardRef<HTMLElement, CometPressableProps>(
       className_DEPRECATED,
       cursorDisabled,
       display = 'block',
+      expanding = 'block',
       hideFocusOverlay = false,
       hideHoverOverlay = false,
       disabled = false,
@@ -74,6 +90,7 @@ const CometPressable = forwardRef<HTMLElement, CometPressableProps>(
       suppressFocusRing = false,
       testOnly_pressed = false,
       testid,
+      onContextMenu,
     },
     externalRef,
   ) => {
@@ -129,10 +146,137 @@ const CometPressable = forwardRef<HTMLElement, CometPressableProps>(
       />
     )
 
-    typeof children === 'function' ? children({
-      disabled,
-      
-    })
+    typeof children === 'function' ? (
+      children({
+        disabled,
+        focused: focusedState,
+        focusVisible: focusVisibleState,
+        hovered: hoveredState,
+        overlay,
+        pressed: pressedState,
+      })
+    ) : (
+      <>
+        {children}
+        {overlay}
+      </>
+    )
+
+    // overlayHoveredStyle =
+    //     typeof xstyle === 'function'
+    //       ? xstyle({
+    //           disabled: disabled,
+    //           focused: focusedState,
+    //           focusVisible: focusVisibleState,
+    //           hovered: hoveredState,
+    //           pressed: pressedState,
+    //         })
+    //       : xstyle
+
+    const cometContainerPressableContextValue = useContext(
+      CometContainerPressableContext,
+    )
+
+    const cometDangerouslySuppressInteractiveElementsContextValue = useContext(
+      CometDangerouslySuppressInteractiveElementsContext,
+    )
+
+    const _suppressFocusRing =
+      focusVisibleState &&
+      (hideFocusOverlay || overlayDisabled) &&
+      !suppressFocusRing
+
+    overlayRadius = [
+      display === 'inline' ? classes.root_DEPRECATED : classes.root,
+      cursorDisabled === true && stylex.defaultCursor,
+      expanding && classes.expanding,
+      linkProps !== undefined && classes.linkBase,
+      !focusVisibleState && classes.hideOutline,
+      overlayHoveredStyle,
+      //
+      className,
+      _suppressFocusRing &&
+        (overlayFocusRingPosition === 'inset'
+          ? classes.focusRingInsetXStyle
+          : classes.focusRingXStyle),
+      cometContainerPressableContextValue !== undefined && classes.zIndex,
+    ]
+
+    const _props = {
+      onBlur: onFocusOut,
+      onClick: onPress,
+      onFocus: onFocusIn,
+      onFocusChange: onFocusChangeCb,
+      onFocusVisibleChange: onFocusVisibleChangeCb,
+      onHoverChange: onHoverChangeCb,
+      onHoverEnd: onHoverOut,
+      onHoverStart: onHoverIn,
+      onPressChange: onPressChangeCb,
+      onPressEnd: onPressOut,
+      onPressStart: onPressIn,
+    }
+
+    const ga = useRef(null)
+    const internalRef = useRef<any>(null)
+
+    // useEffect(() => {
+    //   if (isContainerTarget && cometContainerPressableContextValue) {
+    //     // @ts-ignore
+    //     cometContainerPressableContextValue.onMount(
+    //       {
+    //         onContextMenu: (e: any) => {
+    //           preventContextMenu === true && e.preventDefault()
+    //           onContextMenu !== undefined && onContextMenu(e)
+    //         },
+    //         onPress: () => {
+    //           internalRef.current && internalRef.current.click()
+    //         },
+    //         target: !linkProps ? undefined : linkProps.target,
+    //         url: !linkProps ? undefined : linkProps.url,
+    //       },
+    //       ga,
+    //     )
+    //   }
+    // }, [
+    //   cometContainerPressableContextValue,
+    //   isContainerTarget,
+    //   testOnly_pressed,
+    //   onContextMenu,
+    //   preventContextMenu,
+    //   !linkProps ? undefined : linkProps.url,
+    //   !linkProps ? undefined : linkProps.target,
+    // ])
+
+    const ref = useMergeRefs(externalRef, internalRef)
+
+    // if (cometDangerouslySuppressInteractiveElementsContextValue) {
+    //   const comp = display === 'inline' ? 'span' : 'div'
+    //   return jsx(
+    //     comp,
+    //     babelHelpers['extends'](
+    //       {
+    //         className_DEPRECATED: className_DEPRECATED,
+    //         display: display === 'inline' ? display : 'block',
+    //         preventContextMenu: preventContextMenu,
+    //       },
+    //       testOnly_pressed,
+    //       {
+    //         className: c('stylex')(overlayRadius),
+    //         'data-testid': undefined,
+    //         ref: overlayFocusVisibleStyle,
+    //         children: hideHoverOverlay,
+    //       },
+    //     ),
+    //   )
+    // }
+
+    if (linkProps) {
+      const { url, ...rest } = linkProps
+
+      const baseLinkProps = Object.assign({}, rest, {
+        href: url,
+      })
+    }
 
     return <div />
   },
@@ -455,6 +599,7 @@ __d(
           ),
         )
       }
+
       if (linkProps != null) {
         hoveredState = linkProps.url
         pressedState = babelHelpers.objectWithoutPropertiesLoose(linkProps, [

@@ -96,7 +96,7 @@ export default function HeroPlaceholder({
         name,
       )
 
-      return function () {
+      return () => {
         return heroInteractionContextValue.unhold(
           heroInteractionIDContextValue,
           simpleUUID2,
